@@ -1,48 +1,47 @@
-// import React from 'react'
 import { useState, useEffect } from "react"
-
 import Navbar from "../components/Navbar"
 import axios from "axios"
-import PaitentCard from "../components/PaitentCard"
+import Module from "../components/Module"
 
-export interface IPatient {
-  id : string,
-  patientName : string,
-  room : number,
-  critical ?: boolean,
-  temperature ?: number,
-  glucose ?: number,
-  co2 ?: number,
-  o2 ?: number,
-  pressure ?: number,
+export interface IModule {
+	id?: string
+	name?: string
+	critical?: boolean
+	optimal?: number
+	currentValue?: number
+	deviceImage?: string
 }
 
 const Landing = () => {
-  const [patients, setPatients] = useState<IPatient[]>([])
+	const [modules, setModules] = useState<IModule[]>([])
 
-  useEffect(() => {
-    const fetchPatients = async () => {
-      try {
-        const response = await axios.get("http://localhost:8000/api/patients")
-        setPatients(response.data)
-        // console.log("new [patient data is : ", response.data)
-      } catch (err) {
-        console.log(err)
-      }
-    }
-    fetchPatients()
-  }, [])
+	useEffect(() => {
+		const fetchModules = async () => {
+			try {
+				const response = await axios.get(
+					"http://localhost:8000/api/modules"
+				)
+				setModules(response.data)
+				// console.log("new [patient data is : ", response.data)
+			} catch (err) {
+				console.log(err)
+			}
+		}
+		fetchModules()
+	}, [])
 
-  return (
-    <div>
-      <Navbar/>
-      <div>
-        {patients.map((patient,index ) => (
-          <PaitentCard key={index} { ... patient}/>
-        ))}
-      </div>
-    </div>
-  )
+	return (
+		<div>
+			<Navbar />
+			<div className="p-4 h-screen flex items-center justify-center">
+				<div className=" w-3/6 h-screen flex flex-wrap   ">
+					{modules.map((module, index) => (
+						<Module key={index} {...module} />
+					))}
+				</div>
+			</div>
+		</div>
+	)
 }
 
 export default Landing

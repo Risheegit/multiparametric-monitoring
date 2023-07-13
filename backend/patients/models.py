@@ -13,3 +13,13 @@ class Patient(models.Model):
 
     def __str__(self):
         return self.patientName
+
+class Module(models.Model):
+    name = models.CharField(max_length = 50)
+    currentValue = models.PositiveIntegerField(blank = True, null = True)
+    critical = models.BooleanField(default = False)
+    optimal = models.PositiveIntegerField(blank = True, null = True)
+    deviceImage = models.ImageField(blank = True, null = True)
+
+    def __str__(self):
+        return self.name
